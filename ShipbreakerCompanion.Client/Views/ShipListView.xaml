@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="ShipbreakerCompanion.Client.Views.ShipListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ShipbreakerCompanion.Client.Views"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:viewModels="clr-namespace:ShipbreakerCompanion.Client.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+  <GroupBox Header="Available ships" Padding="0"
+            mah:HeaderedControlHelper.HeaderBackground="#666666"
+            BorderBrush="#666666"
+            BorderThickness="1 1 1 2">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+      <ItemsControl ItemsSource="{Binding AvailableShips}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate DataType="viewModels:ShipViewModel">
+            <Border Margin="5" BorderBrush="#666666" BorderThickness="2" CornerRadius="10 0 0 0" Padding="5">
+              <StackPanel>
+                <TextBlock Text="{Binding Name}" FontSize="16" Margin="0 0 0 3" />
+                <StackPanel Orientation="Horizontal">
+                  <Button Width="Auto" HorizontalAlignment="Left"
+                          Height="28"
+                          ToolTip="Set this ship as the current ship for the selected profile."
+                          Command="{Binding DataContext.LoadShipCommand, RelativeSource={RelativeSource AncestorType=mah:MetroWindow}}"
+                          CommandParameter="{Binding .}">
+                    <Button.Style>
+                      <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding IsAlreadyLoaded}" Value="True">
+                            <Setter Property="Content" Value="Ship loaded!" />
+                            <Setter Property="IsEnabled" Value="False" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                            <Setter Property="Content">
+                              <Setter.Value>
+                                <Grid>
+                                  <mah:MetroProgressBar IsIndeterminate="True" Width="75" />
+                                </Grid>
+                              </Setter.Value>
+                            </Setter>
+                            <Setter Property="IsEnabled" Value="False" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding DataContext.CanLoadShips, RelativeSource={RelativeSource AncestorType=ItemsControl}}" Value="False">
+                            <Setter Property="IsEnabled" Value="False" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                        <Setter Property="Content" Value="Load this ship" />
+                      </Style>
+                    </Button.Style>
+                  </Button>
+                  <Button Visibility="{Binding DataContext.ShowChecksum, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource VisibilityConverter}}"
+                          Content="Copy checksum to clipboard"
+                          Command="{Binding DataContext.CopyChecksumCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                          CommandParameter="{Binding .}"/>
+                </StackPanel>
+              </StackPanel>
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </GroupBox>
+</UserControl>

@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Mackerel - Heavy Cargo (8)",
+    "downloadUrl": "todo",
+    "fileName": "Mackerel_HeavyCargo_8",
+    "expectedChecksum": "e05afea98ede06989ad747a6e41645c2"
+  },
+  {
+    "name": "Some other dumb ship",
+    "downloadUrl": "todo",
+    "fileName": "OtherDumbShip"
+  }
+]

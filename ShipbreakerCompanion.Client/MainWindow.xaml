@@ -1,0 +1,29 @@
+﻿<mah:MetroWindow x:Class="ShipbreakerCompanion.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShipbreakerCompanion.Client"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:viewModels="clr-namespace:ShipbreakerCompanion.Client.ViewModels"
+        xmlns:views="clr-namespace:ShipbreakerCompanion.Client.Views"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Shipbreaker Companion Tool" Height="450" Width="800"
+        KeyUp="OnKeyUp">
+  <Border Padding="5">
+    <Grid>
+      <mah:ProgressRing IsActive="{Binding IsLoading}" />
+      <Grid Visibility="{Binding IsLoading, Converter={StaticResource VisibilityConverter}, ConverterParameter=TrueToCollapsed}">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <views:ProfileListView Grid.Row="0" DataContext="{Binding ProfileListVm}" Margin="0 0 0 10" />
+        <views:ShipListView Grid.Row="1" DataContext="{Binding ShipListVm}" />
+      </Grid>
+    </Grid>
+  </Border>
+</mah:MetroWindow>
