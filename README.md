@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Shipbreaker Companion is a tool designed to provide features specifically aimed at the speedrunning community. The goal is to enable speedrunners (newcomers or not) to easily challenge categories that would otherwise be complex to set up.
+The Shipbreaker Companion is a tool for the game Hardspace: Shipbreaker by Blackbird Interactive, designed to provide features specifically aimed at the speedrunning community. The goal is to enable speedrunners (newcomers or not) to easily challenge categories that would otherwise be complex to set up.
 
 It is only compatible with Windows and will not be released for other systems.
 
