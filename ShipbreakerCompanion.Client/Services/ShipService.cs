@@ -17,7 +17,7 @@ namespace ShipbreakerCompanion.Client.Services
         public async Task<ICollection<ShipViewModel>> GetCompetitiveShipsAsync()
         {
             //todo: Use RestSharp to download from GitHub when it's uploaded there. In the meantime we read from disk
-            await using var fs = new FileStream(@"C:\Dev\Dev\ShipbreakerCompanion\CompetitiveShips.json", FileMode.Open);
+            await using var fs = new FileStream(@".\CompetitiveShips.json", FileMode.Open);
             var availableShips = await System.Text.Json.JsonSerializer.DeserializeAsync<Ship[]>(fs, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -60,10 +60,7 @@ namespace ShipbreakerCompanion.Client.Services
         {
             Directory.CreateDirectory(PathHelper.GetCompanionCompetitiveShipsDirectoryPath());
 
-            //todo: Use RestSharp when the ship files are uploaded, but for now let's use some dumb copy
-            File.Copy(
-                @"C:\Users\Doublevil\AppData\LocalLow\Blackbird Interactive\Hardspace_ Shipbreaker\Saves\Profiles_old\Mackerel_HeavyCargo_8.ship",
-                @"C:\Users\Doublevil\AppData\LocalLow\Blackbird Interactive\Hardspace_ Shipbreaker\Saves\ShipbreakerCompanion\Ships\Competitive\Mackerel_HeavyCargo_8.ship");
+            //todo: Use RestSharp when the ship files are uploaded
         }
 
         /// <summary>
