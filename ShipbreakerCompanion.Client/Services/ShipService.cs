@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Threading.Tasks;
+using RestSharp;
 using ShipbreakerCompanion.Client.Helpers;
 using ShipbreakerCompanion.Client.Models;
 using ShipbreakerCompanion.Client.ViewModels;
@@ -16,18 +16,18 @@ namespace ShipbreakerCompanion.Client.Services
         /// </summary>
         public async Task<ICollection<ShipViewModel>> GetCompetitiveShipsAsync()
         {
-            //todo: Use RestSharp to download from GitHub when it's uploaded there. In the meantime we read from disk
-            await using var fs = new FileStream(@".\CompetitiveShips.json", FileMode.Open);
-            var availableShips = await System.Text.Json.JsonSerializer.DeserializeAsync<Ship[]>(fs, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-            //todo: See above
+            using var restClient = new RestClient();
+            //todo: Use a configuration file containing the URL instead of having it hardcoded
+            //todo: Handle exceptions
+            var availableShips = await restClient.GetJsonAsync<Ship[]>("https://github.com/Doublevil/ShipbreakerCompanion/blob/master/CompetitiveShips.json?raw=true");
 
             var results = new List<ShipViewModel>();
-            foreach (var ship in availableShips)
+            foreach (var ship in availableShips ?? Array.Empty<Ship>())
             {
-                results.Add(new ShipViewModel(ship.Name, ship.DownloadUrl, GetLocalPathForShip(ship), ship.ExpectedChecksum));
+                results.Add(new ShipViewModel(ship.Name,
+                    ship.DownloadUrl,
+                    GetLocalPathForShip(ship),
+                    ship.ExpectedChecksum));
             }
             return results;
         }
@@ -60,7 +60,16 @@ namespace ShipbreakerCompanion.Client.Services
         {
             Directory.CreateDirectory(PathHelper.GetCompanionCompetitiveShipsDirectoryPath());
 
-            //todo: Use RestSharp when the ship files are uploaded
+            using var restClient = new RestClient();
+            var request = new RestRequest(ship.DownloadUrl);
+            await using var downloadStream = await restClient.DownloadStreamAsync(request);
+
+            //todo: Use specialized exception
+            if (downloadStream == null)
+                throw new Exception("Unable to download the ship. No stream returned.");
+
+            await using var fileStream = new FileStream(ship.LocalFilePath, FileMode.Create);
+            await downloadStream.CopyToAsync(fileStream);
         }
 
         /// <summary>
