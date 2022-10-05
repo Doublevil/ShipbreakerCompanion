@@ -19,6 +19,7 @@ namespace ShipbreakerCompanion.Client.ViewModels
         
         public ProfileListViewModel ProfileListVm { get; set; }
         public ShipListViewModel ShipListVm { get; set; }
+        public CurrentSalvageViewModel CurrentSalvageVm { get; set; }
 
         public ICommand LoadShipCommand { get; }
 
@@ -33,6 +34,7 @@ namespace ShipbreakerCompanion.Client.ViewModels
 
             ProfileListVm = new ProfileListViewModel(_profileService);
             ShipListVm = new ShipListViewModel(_shipService);
+            CurrentSalvageVm = new CurrentSalvageViewModel();
         }
 
         /// <summary>

@@ -2,11 +2,11 @@
 
 ## Overview
 
-The Shipbreaker Companion is a tool for the game Hardspace: Shipbreaker by Blackbird Interactive, designed to provide features specifically aimed at the speedrunning community. The goal is to enable speedrunners (newcomers or not) to easily challenge categories that would otherwise be complex to set up.
+The Shipbreaker Companion is a tool for the game Hardspace: Shipbreaker by Blackbird Interactive, designed to provide features specifically aimed at the speedrunning community. The goal is to enable speedrunners (newcomers or not) to easily challenge categories that would otherwise be relatively complex to set up.
 
 It is only compatible with Windows and will not be released for other systems.
 
-The speedrunning community pushed for new categories that would be more interesting than the existing ones. The main issue was that due to the way the different game modes are setup, the rules of such categories would be hard to enforce, and require manual setup beforehand. This tool is here to solve this problem.
+The speedrunning community pushed for new categories that would be more interesting than the existing ones. The main issue was that due to the way the different game modes are setup, the rules of such categories would be hard or unpractical to enforce, and require manual setup beforehand. The Companion aims to solve these problems.
 
 ## Features
 
@@ -20,15 +20,17 @@ Meanwhile, the Companion will also download a curated list of ships (matching ea
 
 When the user wants to compete for a particular individual ship category, they just have to find the right ship in the list and click the load button. Their in-game ship will then instantly be the right one.
 
-### Coming soon? Display a salvaging indicator overlay
+### Salvage tracking: show your progress in real-time
 
-This feature is still not confirmed.
+Salvage tracking is a feature that plugs into the game as it runs. However, it's not a game modification. It only reads memory, without ever modifying anything.
 
-It would theoretically allow runners to visualize a simple percentage (or more complex indicators) representing the salvaging state of the ship being worked on.
+This feature enables runners to visualize their current salvaging percentage in real-time, without having to pause the game.
 
-The speedrunning community would ideally have a rule for individual ship categories that you'd have to salvage 95% of the ship before the run is considered complete. However, depending on the game mode, this percentage is either only available when pausing (not ideal) or not available at all (definitely not ideal).
+The speedrunning community would ideally have a rule for individual ship categories that would require salvaging 95% of the ship before the run is considered complete. However, this percentage is only shown when pausing the game, which makes for a waste of time and, to a certain extent, ruins the show for spectators.
 
-The goal of this feature is to display this percentage as an overlay on top of the game constantly, to make it more convenient for everyone involved. It could even be expanded even further with graphics and fancy other features, but the primary goal is to display the current percentage.
+This feature means runners don't have to pause the game. It can also be overlayed on top of the game with third-party software.
+
+In the future, it should be possible to expand the feature to show graphics and other metrics, if there's any demand for these features.
 
 ## Technical overview (under the hood)
 
@@ -42,7 +44,7 @@ Save files for this game are always found in the same AppData/LocalLow subdirect
 
 The challenge was to still present the user with some information that would allow them to differentiate each of their profile saves, since the file name would clearly not do that.
 
-Using Cheat Engine and hexadecimal editors, I tried finding different values that would be interesting to show or manipulate. However, I was only able to find two: the profile name (as entered in-game by the player), and the rank number.
+Using Cheat Engine and hexadecimal editors, I tried finding different values that would be interesting to show or manipulate. However, I was only able to find two: the profile name (as entered in-game by the player when creating a new game), and the rank number.
 
 By seeking at certain adresses in the file and doing sequential byte reads, I was able to successfuly read these values. For now, the Companion only shows the profile name, which should be enough in most cases to recognize which save is which.
 
@@ -54,16 +56,18 @@ The only interesting piece of challenge (if you want to call it that) is that I 
 
 ### UI responsiveness
 
-I enjoy working with WPF and wanted to include a little bit of a challenge for myself. Despite the very limited scope of the tool, it performs a lot of IO operations. One of my self-imposed challenges was to avoid at all cost blocking the UI thread during these operations, and also have visual loading indicators on the UI for every asynchronous action. Moreover, I did not want to use disruptive UI elements (dialogs and the like).
+I enjoy working with WPF and wanted to make a little bit of a challenge for myself. Despite the very limited scope of the tool, it performs a lot of IO operations. One of my self-imposed challenges was to avoid at all cost blocking the UI thread during these operations, and also have visual loading indicators on the UI for every asynchronous action. Moreover, I did not want to use disruptive UI elements (dialogs and the like).
 
-It's not immediately obvious when you use the tool, because most operations are almost instantly resolved if you have decent hardware, but I did implement (and test) a variety of loading indicators for every possible situation.
+It's not immediately obvious when you use the tool, because most operations are almost instantly resolved if you have decent hardware, but I did implement (and test) a variety of loading indicators for every possible situation, and blocked concurrent actions when they should not be allowed (e.g. loading multiple ships at once, or picking a different profile while a ship is being loaded).
 
-### In-game memory reading
+### Game memory reading
 
 The overlay feature would only be possible through 2 ways. One is modding the game (modifying game files), the other is reading the memory of the original, untouched game while it's running. Because I feel like allowing mods can facilitate cheating, I'm leaning more towards the latter.
 
 Observing a process' memory is relatively common in speedrunning, mostly to build timing scripts that remove loading times or that automatically split. It is, however, a very complex endeavor. It requires spending time analyzing ASM code and memory pointers with tools like Cheat Engine, in order to determine a sequence of pointers that would allow you to always find what you're looking for, no matter the state of the game (what the player does) or how the game juggles with its internal memory.
 
-Hardspace: Shipbreaker is built with the game engine Unity. Because this engine is built with .net, this means that we can inspect unobfuscated classes and their members with more powerful tools. However, because of the complexity of the engine, it also means that finding a valid pointer sequence is more complex in most cases (layers upon layers of references).
+Hardspace: Shipbreaker is built with the game engine Unity. Because this engine is built with .net (or rather mono), this means that we can inspect unobfuscated classes and their members with more powerful tools. However, because of the complexity that a game engine brings, it also means that finding a valid pointer sequence is more complex in most cases (layers upon layers of references).
 
-I have yet to dig into it more thoroughly, so I will update this category once I'm done.
+In this case, I wasn't able to find a stable pointer sequence to the values we want to observe. I've located plenty of interesting classes, code paths and memory regions, tried a lot of scans, but the pointers always ended up breaking in various circumstances (loading different ships, switching profiles, restarting the game, loading the same ship multiple times, etc).
+
+So instead of a pointer path, I chose an array-of-bytes scan to find a portion of the memory of the class instance that we're interested in. It appears to be working, although pointers would have been much better in terms of performance.

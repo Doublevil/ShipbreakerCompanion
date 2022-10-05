@@ -22,7 +22,8 @@
         </Grid.RowDefinitions>
 
         <views:ProfileListView Grid.Row="0" DataContext="{Binding ProfileListVm}" Margin="0 0 0 10" />
-        <views:ShipListView Grid.Row="1" DataContext="{Binding ShipListVm}" />
+        <views:ShipListView Grid.Row="1" DataContext="{Binding ShipListVm}" Margin="0 0 0 10" />
+        <views:CurrentSalvageView Grid.Row="2" DataContext="{Binding CurrentSalvageVm}" />
       </Grid>
     </Grid>
   </Border>
