@@ -4,6 +4,8 @@
 
 The Shipbreaker Companion is a tool for the game Hardspace: Shipbreaker by Blackbird Interactive, designed to provide features specifically aimed at the speedrunning community. The goal is to enable speedrunners (newcomers or not) to easily challenge categories that would otherwise be relatively complex to set up.
 
+<img src="https://github.com/Doublevil/ShipbreakerCompanion/blob/master/Media/Screenshot_MainWindow01.png" />
+
 It is only compatible with Windows and will not be released for other systems.
 
 The speedrunning community pushed for new categories that would be more interesting than the existing ones. The main issue was that due to the way the different game modes are setup, the rules of such categories would be hard or unpractical to enforce, and require manual setup beforehand. The Companion aims to solve these problems.
@@ -25,6 +27,8 @@ When the user wants to compete for a particular individual ship category, they j
 Salvage tracking is a feature that plugs into the game as it runs. However, it's not a game modification. It only reads memory, without ever modifying anything.
 
 This feature enables runners to visualize their current salvaging percentage in real-time, without having to pause the game.
+
+<img src="https://github.com/Doublevil/ShipbreakerCompanion/blob/master/Media/Screenshot_GameOverlay01.jpg" width="400" />
 
 The speedrunning community would ideally have a rule for individual ship categories that would require salvaging 95% of the ship before the run is considered complete. However, this percentage is only shown when pausing the game, which makes for a waste of time and, to a certain extent, ruins the show for spectators.
 
