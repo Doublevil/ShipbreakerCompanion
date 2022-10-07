@@ -1,0 +1,77 @@
+﻿<Window x:Class="ShipbreakerCompanion.Client.Views.CurrentSalvageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShipbreakerCompanion.Client.Views"
+        mc:Ignorable="d" Background="#01000000" WindowStyle="None"
+        Title="Salvage info" Height="50" Width="250" AllowsTransparency="True"
+        Style="{StaticResource PopOutWindowStyle}"
+        MouseEnter="OnWindowMouseEnter"
+        MouseLeave="OnWindowMouseLeave"
+        Deactivated="OnWindowDeactivated">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="30" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <UniformGrid Grid.Column="0" Rows="2" Columns="1" x:Name="WindowToolPanel">
+      <!-- Window close button -->
+      <Button Content="X" Margin="2" FontSize="10" Cursor="Hand"
+              Style="{DynamicResource MahApps.Styles.Button.Circle}"
+              Click="OnCloseButtonClick"/>
+      <!-- Draggable control (to move the window around) -->
+      <Border BorderBrush="#222222" BorderThickness="2" Background="#666666" Margin="2" Cursor="Hand" CornerRadius="5"
+              MouseDown="OnDragControlMouseDown">
+        <TextBlock Text="✋" HorizontalAlignment="Center" VerticalAlignment="Center" />
+      </Border>
+    </UniformGrid>
+
+    <!-- Salvage progress indicators -->
+    <Grid Grid.Column="1" Visibility="{Binding IsFullyTracking, Converter={StaticResource VisibilityConverter}}">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="2*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <TextBlock Grid.Column="0" Text="{Binding SalvageProgress}" FontSize="48"
+                 HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock.Style>
+          <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ObjectiveState}" Value="Failed">
+                <Setter Property="Foreground" Value="#FF2222" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding ObjectiveState}" Value="Reached">
+                <Setter Property="Foreground" Value="#77CC77" />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="Foreground" Value="#EEEEEE" />
+          </Style>
+        </TextBlock.Style>
+      </TextBlock>
+      <TextBlock Grid.Column="1" Text="{Binding DestroyProgress, StringFormat= / {0}}" FontSize="24"
+                 Foreground="#FF9933" HorizontalAlignment="Left" VerticalAlignment="Top" />
+    </Grid>
+
+    <!-- Labels shown when tracking is off or searching for values -->
+    <Grid Grid.Column="1" Visibility="{Binding IsFullyTracking, Converter={StaticResource VisibilityConverter}, ConverterParameter=TrueToCollapsed}">
+      <TextBlock FontSize="32" VerticalAlignment="Center" >
+        <TextBlock.Style>
+          <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding TrackingState}" Value="Stopped">
+                <Setter Property="Text" Value="No tracking" />
+                <Setter Property="Foreground" Value="#AA2222" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding TrackingState}" Value="Attached">
+                <Setter Property="Text" Value="Searching..." />
+                <Setter Property="Foreground" Value="#CC7777" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </TextBlock.Style>
+      </TextBlock>
+    </Grid>
+  </Grid>
+</Window>

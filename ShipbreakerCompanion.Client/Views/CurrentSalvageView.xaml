@@ -15,7 +15,7 @@
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="120" />
-          <ColumnDefinition Width="300" />
+          <ColumnDefinition Width="260" />
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -37,7 +37,7 @@
               </Style>
             </TextBlock.Style>
           </TextBlock>
-          <TextBlock FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center">
+          <TextBlock FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock.Style>
               <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                 <Style.Triggers>
@@ -67,7 +67,7 @@
               <ColumnDefinition Width="2*" />
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="{Binding SalvageProgress}" FontSize="48" FontWeight="Bold"
+            <TextBlock Grid.Column="0" Text="{Binding SalvageProgress}" FontSize="48"
                        HorizontalAlignment="Center" VerticalAlignment="Center">
               <TextBlock.Style>
                 <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
@@ -82,8 +82,8 @@
                 </Style>
               </TextBlock.Style>
             </TextBlock>
-            <TextBlock Grid.Column="1" Text="{Binding DestroyProgress, StringFormat= / {0}}" FontSize="24" FontWeight="Bold" Foreground="#FF9933"
-                       HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <TextBlock Grid.Column="1" Text="{Binding DestroyProgress, StringFormat= / {0}}" FontSize="24"
+                       Foreground="#FF9933" HorizontalAlignment="Left" VerticalAlignment="Top" />
           </Grid>
         </Border>
 
@@ -95,24 +95,33 @@
         </StackPanel>
       </Grid>
 
-      <Button Command="{Binding ToggleTrackingCommand}" CommandParameter="{Binding .}"
-              HorizontalAlignment="Left" Width="120" Margin="0 10 0 0">
-        <Button.Style>
-          <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-            <Style.Triggers>
-              <DataTrigger Binding="{Binding TrackingState}" Value="Stopped">
-                <Setter Property="Content" Value="Start tracking" />
-              </DataTrigger>
-              <DataTrigger Binding="{Binding TrackingState}" Value="Attached">
-                <Setter Property="Content" Value="Stop tracking" />
-              </DataTrigger>
-              <DataTrigger Binding="{Binding TrackingState}" Value="Tracking">
-                <Setter Property="Content" Value="Stop tracking" />
-              </DataTrigger>
-            </Style.Triggers>
-          </Style>
-        </Button.Style>
-      </Button>
+      <WrapPanel Orientation="Horizontal" Margin="0 10 0 0">
+        <Button Command="{Binding ToggleTrackingCommand}" CommandParameter="{Binding .}"
+                HorizontalAlignment="Left" Width="120" ToolTip="Start tracking the game to show current salvage progress.">
+          <Button.Style>
+            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding TrackingState}" Value="Stopped">
+                  <Setter Property="Content" Value="Start tracking" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding TrackingState}" Value="Attached">
+                  <Setter Property="Content" Value="Stop tracking" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding TrackingState}" Value="Tracking">
+                  <Setter Property="Content" Value="Stop tracking" />
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </Button.Style>
+        </Button>
+
+        <!-- Pop out button to show the transparent indicator window -->
+        <Button Content="Pop out" Click="OnPopOutClicked" Margin="10 0 0 0">
+          <Button.ToolTip>
+            Show progress indicator on top of other windows so that you can put it on top of the game.
+          </Button.ToolTip>
+        </Button>
+      </WrapPanel>
     </StackPanel>
   </GroupBox>
 </UserControl>

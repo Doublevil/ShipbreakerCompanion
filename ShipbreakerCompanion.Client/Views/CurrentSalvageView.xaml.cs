@@ -11,5 +11,14 @@ namespace ShipbreakerCompanion.Client.Views
         {
             InitializeComponent();
         }
+
+        private void OnPopOutClicked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var salvageWindow = new CurrentSalvageWindow
+            {
+                DataContext = DataContext
+            };
+            salvageWindow.Show();
+        }
     }
 }
