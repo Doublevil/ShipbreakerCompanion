@@ -1,26 +1,26 @@
 [
   {
     "name": "Mackerel: Light Cargo",
-    "downloadUrl": "tbd",
+    "downloadUrl": "https://github.com/Doublevil/ShipbreakerCompanion/blob/master/Ships/Mackerel_Light_Cargo.ship?raw=true",
     "fileName": "Mackerel_Light_Cargo",
-    "expectedChecksum": "tbd"
+    "expectedChecksum": "e9d46cb154722ba9ba0de3b0eeeecafb"
   },
   {
     "name": "Atlas: Nomad Cargo Hauler",
-    "downloadUrl": "tbd",
+    "downloadUrl": "https://github.com/Doublevil/ShipbreakerCompanion/blob/master/Ships/Atlas_Nomad_Cargo_Hauler.ship?raw=true",
     "fileName": "Atlas_Nomad_Cargo_Hauler",
-    "expectedChecksum": "tbd"
+    "expectedChecksum": "0811abb45aea164b9b73321a0ae4e008"
   },
   {
     "name": "Javelin: Heavy Cargo",
-    "downloadUrl": "tbd",
+    "downloadUrl": "https://github.com/Doublevil/ShipbreakerCompanion/blob/master/Ships/Javelin_Heavy_Cargo.ship?raw=true",
     "fileName": "Javelin_Heavy_Cargo",
-    "expectedChecksum": "tbd"
+    "expectedChecksum": "0bdec3782151888091a9942fe64a71d3"
   },
   {
     "name": "Gecko: Station Hopper",
-    "downloadUrl": "tbd",
+    "downloadUrl": "https://github.com/Doublevil/ShipbreakerCompanion/blob/master/Ships/Gecko_Station_Hopper.ship?raw=true",
     "fileName": "Gecko_Station_Hopper",
-    "expectedChecksum": "tbd"
+    "expectedChecksum": "65df7b6e662885fd100d05cd9f40f501"
   }
 ]
