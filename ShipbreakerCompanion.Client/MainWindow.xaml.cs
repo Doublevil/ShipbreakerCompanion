@@ -2,6 +2,7 @@
 using ShipbreakerCompanion.Client.Services;
 using ShipbreakerCompanion.Client.ViewModels;
 using System;
+using System.Windows;
 
 namespace ShipbreakerCompanion.Client
 {
@@ -34,6 +35,15 @@ namespace ShipbreakerCompanion.Client
             {
                 _vm.EnableDebugMode();
             }
+        }
+
+        /// <summary>
+        /// Callback.
+        /// When main window is closed, shutdown the application.
+        /// </summary>
+        private void OnMainWindowClosed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

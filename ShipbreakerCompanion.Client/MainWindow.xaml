@@ -10,6 +10,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="Shipbreaker Companion Tool" Height="700" Width="800"
+        Closed="OnMainWindowClosed"
         Style="{StaticResource WindowBaseStyle}"
         KeyUp="OnKeyUp">
   <Border Padding="5">
