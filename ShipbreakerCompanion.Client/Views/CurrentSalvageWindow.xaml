@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShipbreakerCompanion.Client.Views"
         mc:Ignorable="d" Background="#01000000" WindowStyle="None"
-        Title="Salvage info" Height="50" Width="250" AllowsTransparency="True"
+        Title="Salvage info" Height="50" Width="270" AllowsTransparency="True"
         Style="{StaticResource PopOutWindowStyle}"
         MouseEnter="OnWindowMouseEnter"
         MouseLeave="OnWindowMouseLeave"
