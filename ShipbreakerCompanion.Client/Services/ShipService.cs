@@ -24,6 +24,9 @@ namespace ShipbreakerCompanion.Client.Services
             var results = new List<ShipViewModel>();
             foreach (var ship in availableShips ?? Array.Empty<Ship>())
             {
+                // Ships from the list are the competitive ones, so set the boolean here.
+                ship.IsCompetitive = true;
+
                 results.Add(new ShipViewModel(ship.Name,
                     ship.DownloadUrl,
                     GetLocalPathForShip(ship),
