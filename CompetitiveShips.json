@@ -1,13 +1,26 @@
 [
   {
-    "name": "Mackerel - Heavy Cargo (8)",
-    "downloadUrl": "https://github.com/Doublevil/ShipbreakerCompanion/blob/master/Ships/Mackerel_HeavyCargo_8.ship?raw=true",
-    "fileName": "Mackerel_HeavyCargo_8",
-    "expectedChecksum": "e05afea98ede06989ad747a6e41645c2"
+    "name": "Mackerel: Light Cargo",
+    "downloadUrl": "tbd",
+    "fileName": "Mackerel_Light_Cargo",
+    "expectedChecksum": "tbd"
   },
   {
-    "name": "Placeholder ship (not working)",
-    "downloadUrl": "todo",
-    "fileName": "SomeOtherShip"
+    "name": "Atlas: Nomad Cargo Hauler",
+    "downloadUrl": "tbd",
+    "fileName": "Atlas_Nomad_Cargo_Hauler",
+    "expectedChecksum": "tbd"
+  },
+  {
+    "name": "Javelin: Heavy Cargo",
+    "downloadUrl": "tbd",
+    "fileName": "Javelin_Heavy_Cargo",
+    "expectedChecksum": "tbd"
+  },
+  {
+    "name": "Gecko: Station Hopper",
+    "downloadUrl": "tbd",
+    "fileName": "Gecko_Station_Hopper",
+    "expectedChecksum": "tbd"
   }
 ]
