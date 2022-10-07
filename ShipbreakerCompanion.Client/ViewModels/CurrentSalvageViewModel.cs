@@ -176,7 +176,7 @@ namespace ShipbreakerCompanion.Client.ViewModels
                 // Perform an array-of-byte scan to find the salvage progress state struct.
                 // This relies on the SalvageIndicatorController instance having the right enum/bool values.
                 // Found with the help of Cheat Engine with the Mono plugin.
-                var aobResults = _mem.AoBScan("01 00 00 00 02 00 00 00 01 00 00 00 00 00 00 00 ?? ?? ?? ?? ?? ?? ?? ?? 01 01 01", true, false).Result;
+                var aobResults = _mem.AoBScan("01 00 00 00 02 00 00 00 01 00 00 00 00 00 00 00 ?? ?? ?? ?? ?? ?? ?? ?? 01 ?? 01", true, false).Result;
 
                 // This will probably return several results because it's not a great signature (best I could find after a whole day).
                 // We'll try to read from each result and see if the numbers look right for each.
