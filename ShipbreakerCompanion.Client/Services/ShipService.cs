@@ -19,7 +19,7 @@ namespace ShipbreakerCompanion.Client.Services
             using var restClient = new RestClient();
             //todo: Use a configuration file containing the URL instead of having it hardcoded
             //todo: Handle exceptions
-            var availableShips = await restClient.GetJsonAsync<Ship[]>("https://github.com/Doublevil/ShipbreakerCompanion/blob/master/CompetitiveShips.json?raw=true");
+            var availableShips = await restClient.GetJsonAsync<Ship[]>($"https://github.com/Doublevil/ShipbreakerCompanion/blob/master/CompetitiveShips.json?raw=true&noCache={Guid.NewGuid()}");
 
             var results = new List<ShipViewModel>();
             foreach (var ship in availableShips ?? Array.Empty<Ship>())
