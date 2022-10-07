@@ -93,6 +93,33 @@
           <TextBlock FontSize="16" Text="{Binding SalvagedValue, StringFormat=Salvaged: {0:C0}}" />
           <TextBlock FontSize="16" Text="{Binding DestroyedValue, StringFormat=Destroyed: {0:C0}}" />
         </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="2"
+            Visibility="{Binding IsTrackingStopped, Converter={StaticResource VisibilityConverter}}">
+          <TextBlock FontSize="16" TextWrapping="Wrap"
+                     Text="Track the game in real-time and display salvage stats." />
+          <TextBlock FontSize="14" TextWrapping="Wrap" Foreground="#AAAAAA"
+                     Text="Tracking can only work if the game is running and you are either in the hab with an active hangar ship, or salvaging a ship." />
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="2"
+                    Visibility="{Binding IsTrackingStopped, Converter={StaticResource VisibilityConverter}}">
+          <TextBlock FontSize="16" TextWrapping="Wrap"
+                     Text="Track the game in real-time and display salvage stats." />
+          <TextBlock FontSize="14" TextWrapping="Wrap" Foreground="#AAAAAA"
+                     Text="Tracking can only work if the game is running and you are either in the hab with an active hangar ship, or salvaging a ship." />
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="2"
+                    Visibility="{Binding IsTrackingSearching, Converter={StaticResource VisibilityConverter}}">
+          <TextBlock FontSize="16" TextWrapping="Wrap"
+                     Text="Trying to locate salvage stats." />
+          <TextBlock FontSize="14" TextWrapping="Wrap" Foreground="#AAAAAA"
+                     Text="You can keep playing while the Companion is searching." />
+          <TextBlock FontSize="14" TextWrapping="Wrap" Foreground="Orange"
+                     Text="This operation can be CPU-intensive. It is recommended to stop tracking if you do not plan to start salvaging immediately." />
+        </StackPanel>
+
       </Grid>
 
       <WrapPanel Orientation="Horizontal" Margin="0 10 0 0">

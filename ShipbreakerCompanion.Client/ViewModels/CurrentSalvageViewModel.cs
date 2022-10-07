@@ -60,9 +60,19 @@ namespace ShipbreakerCompanion.Client.ViewModels
         [Notify] private string _stateError;
 
         /// <summary>
-        /// Gets a value indicating if the tracking is currently fully operational.
+        /// Gets a boolean value indicating if the tracking is currently fully operational.
         /// </summary>
         public bool IsFullyTracking => TrackingState == GameTrackingState.Tracking;
+
+        /// <summary>
+        /// Gets a boolean value indicating if the tracking is in the stopped state.
+        /// </summary>
+        public bool IsTrackingStopped => TrackingState == GameTrackingState.Stopped;
+
+        /// <summary>
+        /// Gets a boolean value indicating if the tracking is in the Attached state.
+        /// </summary>
+        public bool IsTrackingSearching => TrackingState == GameTrackingState.Attached;
 
         /// <summary>
         /// Gets the command that toggles tracking.

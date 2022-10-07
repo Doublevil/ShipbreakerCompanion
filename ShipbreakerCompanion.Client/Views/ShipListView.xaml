@@ -12,54 +12,62 @@
             mah:HeaderedControlHelper.HeaderBackground="#666666"
             BorderBrush="#666666"
             BorderThickness="1 1 1 2">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-      <ItemsControl ItemsSource="{Binding AvailableShips}">
-        <ItemsControl.ItemTemplate>
-          <DataTemplate DataType="viewModels:ShipViewModel">
-            <Border Margin="5" BorderBrush="#666666" BorderThickness="2" CornerRadius="10 0 0 0" Padding="5">
-              <StackPanel>
-                <TextBlock Text="{Binding Name}" FontSize="16" Margin="0 0 0 3" />
-                <StackPanel Orientation="Horizontal">
-                  <Button Width="Auto" HorizontalAlignment="Left"
-                          Height="28"
-                          ToolTip="Set this ship as the current ship for the selected profile."
-                          Command="{Binding DataContext.LoadShipCommand, RelativeSource={RelativeSource AncestorType=mah:MetroWindow}}"
-                          CommandParameter="{Binding .}">
-                    <Button.Style>
-                      <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                        <Style.Triggers>
-                          <DataTrigger Binding="{Binding IsAlreadyLoaded}" Value="True">
-                            <Setter Property="Content" Value="Ship loaded!" />
-                            <Setter Property="IsEnabled" Value="False" />
-                          </DataTrigger>
-                          <DataTrigger Binding="{Binding IsLoading}" Value="True">
-                            <Setter Property="Content">
-                              <Setter.Value>
-                                <Grid>
-                                  <mah:MetroProgressBar IsIndeterminate="True" Width="75" />
-                                </Grid>
-                              </Setter.Value>
-                            </Setter>
-                            <Setter Property="IsEnabled" Value="False" />
-                          </DataTrigger>
-                          <DataTrigger Binding="{Binding DataContext.CanLoadShips, RelativeSource={RelativeSource AncestorType=ItemsControl}}" Value="False">
-                            <Setter Property="IsEnabled" Value="False" />
-                          </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="Content" Value="Load this ship" />
-                      </Style>
-                    </Button.Style>
-                  </Button>
-                  <Button Visibility="{Binding DataContext.ShowChecksum, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource VisibilityConverter}}"
-                          Content="Copy checksum to clipboard"
-                          Command="{Binding DataContext.CopyChecksumCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                          CommandParameter="{Binding .}"/>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <TextBlock Grid.Row="0" Text="Make sure you're not already in career mode before loading a ship!"
+                 Margin="10 5 5 0" FontSize="14" Foreground="Orange" />
+      <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <ItemsControl ItemsSource="{Binding AvailableShips}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="viewModels:ShipViewModel">
+              <Border Margin="5" BorderBrush="#666666" BorderThickness="2" CornerRadius="10 0 0 0" Padding="5">
+                <StackPanel>
+                  <TextBlock Text="{Binding Name}" FontSize="16" Margin="0 0 0 3" />
+                  <StackPanel Orientation="Horizontal">
+                    <Button Width="Auto" HorizontalAlignment="Left"
+                            Height="28"
+                            ToolTip="Set this ship as the current ship for the selected profile."
+                            Command="{Binding DataContext.LoadShipCommand, RelativeSource={RelativeSource AncestorType=mah:MetroWindow}}"
+                            CommandParameter="{Binding .}">
+                      <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsAlreadyLoaded}" Value="True">
+                              <Setter Property="Content" Value="Ship loaded!" />
+                              <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                              <Setter Property="Content">
+                                <Setter.Value>
+                                  <Grid>
+                                    <mah:MetroProgressBar IsIndeterminate="True" Width="75" />
+                                  </Grid>
+                                </Setter.Value>
+                              </Setter>
+                              <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding DataContext.CanLoadShips, RelativeSource={RelativeSource AncestorType=ItemsControl}}" Value="False">
+                              <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="Content" Value="Load this ship" />
+                        </Style>
+                      </Button.Style>
+                    </Button>
+                    <Button Visibility="{Binding DataContext.ShowChecksum, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource VisibilityConverter}}"
+                            Content="Copy checksum to clipboard"
+                            Command="{Binding DataContext.CopyChecksumCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                            CommandParameter="{Binding .}"/>
+                  </StackPanel>
                 </StackPanel>
-              </StackPanel>
-            </Border>
-          </DataTemplate>
-        </ItemsControl.ItemTemplate>
-      </ItemsControl>
-    </ScrollViewer>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </Grid>
   </GroupBox>
 </UserControl>

@@ -17,7 +17,9 @@ namespace ShipbreakerCompanion.Client.Converters
             FalseToCollapsed,
             TrueToCollapsed,
             ListEmptyToCollapsed,
-            ListNotEmptyToCollapsed
+            ListNotEmptyToCollapsed,
+            StringEqualToCollapsed,
+            StringNotEqualToCollapsed
         }
 
         /// <summary>Converts a value.</summary>
@@ -33,7 +35,7 @@ namespace ShipbreakerCompanion.Client.Converters
 
             bool boolValue = (value as bool?) == true;
             var collectionValue = value as IList;
-
+            
             switch (mode)
             {
                 case ConvertMode.FalseToCollapsed:
@@ -44,7 +46,11 @@ namespace ShipbreakerCompanion.Client.Converters
                 case ConvertMode.ListEmptyToCollapsed:
                     return collectionValue?.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
                 case ConvertMode.ListNotEmptyToCollapsed:
-                    return !(collectionValue?.Count > 0) ? Visibility.Visible : Visibility.Collapsed;
+                    return collectionValue?.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
+                case ConvertMode.StringEqualToCollapsed:
+                    return value?.ToString() == parameter?.ToString() ? Visibility.Collapsed : Visibility.Visible;
+                case ConvertMode.StringNotEqualToCollapsed:
+                    return value?.ToString() == parameter?.ToString() ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
