@@ -36,6 +36,14 @@ This feature means runners don't have to pause the game. It can also be overlaye
 
 In the future, it should be possible to expand the feature to show graphics and other metrics, if there's any demand for these features.
 
+### Download and install a maxed-out profile
+
+To speedrun the individual ships "Seeded" category, ideally you need an advanced save in the "Open Shift" mode.
+
+Under the profile list, a button will allow you to download and install a maxed-out Open Shift profile save file, in a single click.
+
+However, because the game only supports one save for each difficulty at a time, if you already had an Open Shift save, you need to archive it. This process can also be done through the Companion tool, by picking your old profile and clicking "Disable this profile". This will move your save file to a subdirectory where it can still be found by the Companion tool, but not by the game. You can reactivate a disabled profile at any time with the same button.
+
 ## Technical overview (under the hood)
 
 This section is aimed at people who might be interested in the technical aspect of this project.
