@@ -3,6 +3,7 @@ using ShipbreakerCompanion.Client.Services;
 using ShipbreakerCompanion.Client.ViewModels;
 using System;
 using System.Windows;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace ShipbreakerCompanion.Client
 {
@@ -17,7 +18,7 @@ namespace ShipbreakerCompanion.Client
         {
             // We will initialize everything here, even though it's not very clean, for the sake of simplicity.
             // In a bigger project, we'd use some IoC component, but that's unneeded complexity here for now.
-            _vm = new MainViewModel(new ProfileService(), new ShipService());
+            _vm = new MainViewModel(new ProfileService(), new ShipService(), DialogCoordinator.Instance);
             DataContext = _vm;
             InitializeComponent();
         }

@@ -8,51 +8,87 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:converters="clr-namespace:ShipbreakerCompanion.Client.Converters"
              mc:Ignorable="d"
-             d:DesignHeight="200" d:DesignWidth="800">
-  <GroupBox Header="Profile selection" Padding="0"
-            mah:HeaderedControlHelper.HeaderBackground="#666666"
-            BorderBrush="#666666"
-            BorderThickness="1 1 1 2">
-    <Grid Height="30">
-      <mah:MetroProgressBar IsIndeterminate="True" Visibility="{Binding IsLoading, Converter={StaticResource VisibilityConverter}}" />
-      <Grid Visibility="{Binding IsLoading, Converter={StaticResource VisibilityConverter}, ConverterParameter=TrueToCollapsed}">
-        <ListView ItemsSource="{Binding Profiles}"
-                  SelectedItem="{Binding SelectedProfile}"
-                  IsEnabled="{Binding CanChangeProfile}"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                  Visibility="{Binding Profiles, Converter={StaticResource VisibilityConverter}, ConverterParameter=ListEmptyToCollapsed}">
-          <ListView.ItemsPanel>
-            <ItemsPanelTemplate>
-              <UniformGrid IsItemsHost="True" Rows="1" />
-            </ItemsPanelTemplate>
-          </ListView.ItemsPanel>
-          <ListView.ItemTemplate>
-            <DataTemplate DataType="viewModels:ProfileViewModel">
-              <TextBlock Text="{Binding ProfileName}"
-                         FontSize="16"
-                         HorizontalAlignment="Center"
-                         TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
-                         ToolTip="{Binding ProfileName}" ToolTipService.InitialShowDelay="200" />
-            </DataTemplate>
-          </ListView.ItemTemplate>
-          <ListView.ItemContainerStyle>
-            <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
-              <Setter Property="Margin" Value="0" />
-              <Setter Property="BorderBrush" Value="#666666" />
-              <Setter Property="BorderThickness" Value="1 0" />
-              <Setter Property="Cursor" Value="Hand" />
-            </Style>
-          </ListView.ItemContainerStyle>
-        </ListView>
+             d:DesignHeight="200" d:DesignWidth="800"
+             mah:DialogParticipation.Register="{Binding}">
+  <StackPanel>
+    <GroupBox Header="Profile selection" Padding="0"
+              mah:HeaderedControlHelper.HeaderBackground="#666666"
+              BorderBrush="#666666"
+              BorderThickness="1 1 1 2">
+      <Grid>
+        <mah:MetroProgressBar IsIndeterminate="True" Visibility="{Binding IsLoading, Converter={StaticResource VisibilityConverter}}" />
+        <Grid Visibility="{Binding IsLoading, Converter={StaticResource VisibilityConverter}, ConverterParameter=TrueToCollapsed}">
+          <ListView ItemsSource="{Binding Profiles}"
+                    SelectedItem="{Binding SelectedProfile}"
+                    IsEnabled="{Binding CanChangeProfile}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    Visibility="{Binding Profiles, Converter={StaticResource VisibilityConverter}, ConverterParameter=ListEmptyToCollapsed}">
+            <ListView.ItemsPanel>
+              <ItemsPanelTemplate>
+                <UniformGrid IsItemsHost="True" Rows="1" />
+              </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+              <DataTemplate DataType="viewModels:ProfileViewModel">
+                <TextBlock x:Name="ProfileNameTextBlock"
+                           Text="{Binding ProfileName}"
+                           FontSize="16"
+                           HorizontalAlignment="Center"
+                           TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
+                           ToolTip="{Binding ProfileName}" ToolTipService.InitialShowDelay="200" />
+                <DataTemplate.Triggers>
+                  <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                    <Setter TargetName="ProfileNameTextBlock" Property="Text" Value="{Binding ProfileName, StringFormat=[🗙] {0}}" />
+                    <Setter TargetName="ProfileNameTextBlock" Property="ToolTip">
+                      <Setter.Value>
+                        <TextBlock Text="{Binding ProfileName, StringFormat={}{0} (This profile is disabled)}" />
+                      </Setter.Value>
+                    </Setter>
+                  </DataTrigger>
+                </DataTemplate.Triggers>
+              </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+              <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="BorderBrush" Value="#666666" />
+                <Setter Property="BorderThickness" Value="1 0" />
+                <Setter Property="Cursor" Value="Hand" />
+              </Style>
+            </ListView.ItemContainerStyle>
+          </ListView>
 
-        <!-- When list empty -->
-        <TextBlock TextWrapping="Wrap"
-                   VerticalAlignment="Center"
-                   Margin="5 0"
-                   Visibility="{Binding Profiles, Converter={StaticResource VisibilityConverter}, ConverterParameter=ListNotEmptyToCollapsed}">
-          Could not load any profile file from your save directory. Some features will be unavailable.
-        </TextBlock>
+            <!-- When list empty -->
+          <TextBlock TextWrapping="Wrap"
+                     VerticalAlignment="Center"
+                     Margin="5 0"
+                     Visibility="{Binding Profiles, Converter={StaticResource VisibilityConverter}, ConverterParameter=ListNotEmptyToCollapsed}">
+            Could not load any profile file from your save directory. Some features will be unavailable.
+          </TextBlock>
+        </Grid>
       </Grid>
-    </Grid>
-  </GroupBox>
+    </GroupBox>
+
+    <!-- Action buttons panel -->
+    <StackPanel Orientation="Horizontal" Margin="0 5 0 0"
+                Visibility="{Binding Profiles, Converter={StaticResource VisibilityConverter}, ConverterParameter=ListEmptyToCollapsed}">
+      <Button Command="{Binding ToggleProfileCommand}" CommandParameter="{Binding SelectedProfile}">
+        <Button.Style>
+          <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding SelectedProfile.IsEnabled}" Value="False">
+                <Setter Property="Content" Value="Reactivate this profile" />
+                <Setter Property="ToolTip" Value="Make the selected profile detectable by the game again." />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="Content" Value="Disable this profile" />
+            <Setter Property="ToolTip" Value="Make the selected profile undetectable by the game. You will still be able to see it in the Companion tool and you can undo this at any point." />
+          </Style>
+        </Button.Style>
+      </Button>
+      <Button Content="Install &quot;open shift full&quot; save" Margin="5 0 0 0"
+              ToolTip="Download an advanced Open Shift mode save with enough LYNX points to buy all upgrades."
+              Command="{Binding InstallFullSaveCommand}" CommandParameter="{Binding .}" />
+    </StackPanel>
+  </StackPanel>
 </UserControl>

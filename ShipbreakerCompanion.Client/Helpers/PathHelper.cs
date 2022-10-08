@@ -47,11 +47,56 @@ namespace ShipbreakerCompanion.Client.Helpers
         }
 
         /// <summary>
+        /// Gets the Shipbreaker companion downloaded profile saves directory path. This is where profile saves
+        /// downloaded by the tool are stored.
+        /// </summary>
+        public static string GetCompanionDownloadedProfileSavesDirectoryPath()
+        {
+            return Path.Combine(GetCompanionFilesBasePath(), "Saves");
+        }
+
+        /// <summary>
+        /// Gets the local path of the full Open Shift profile save file. This is where the Companion will save
+        /// the file after downloading it, so it can be re-used without downloading afterwards.
+        /// </summary>
+        public static string GetCompanionFullProfileSaveFilePath()
+        {
+            // Note: the file name is important. If it's different, the game won't read it.
+            return Path.Combine(GetCompanionDownloadedProfileSavesDirectoryPath(), "vglpp3_2195076518.lpw");
+        }
+
+        /// <summary>
         /// Gets the path to the final directory where the profile saves are found.
         /// </summary>
         public static string GetSaveDirectoryCompletePath()
         {
             return Path.Combine(GetSaveDirectoryBasePath(), "Profiles");
+        }
+
+        /// <summary>
+        /// Gets the path to the directory for disabled save files.
+        /// </summary>
+        public static string GetDisabledSaveDirectoryPath()
+        {
+            return Path.Combine(GetSaveDirectoryCompletePath(), "Disabled");
+        }
+
+        /// <summary>
+        /// Determines whether the given file path is directly in the specified directory path.
+        /// </summary>
+        /// <param name="filePath">File path to test.</param>
+        /// <param name="directoryPath">Directory path to test.</param>
+        public static bool IsInFolder(string filePath, string directoryPath)
+        {
+            string fileDirectoryPath = Path.GetDirectoryName(filePath);
+            if (fileDirectoryPath == null)
+                return false;
+
+            return string.Compare(
+                Path.GetFullPath(fileDirectoryPath)
+                    .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar),
+                Path.GetFullPath(directoryPath).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar),
+                StringComparison.InvariantCultureIgnoreCase) == 0;
         }
     }
 }

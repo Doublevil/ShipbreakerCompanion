@@ -20,5 +20,16 @@ namespace ShipbreakerCompanion.Client.Services
         /// <param name="profile">Profile receiving the ship file.</param>
         /// <param name="shipFilePath">Path to the ship file to associate to the profile.</param>
         Task LinkShipFileAsync(ProfileViewModel profile, string shipFilePath);
+
+        /// <summary>
+        /// Disables or re-enables the given profile.
+        /// </summary>
+        /// <param name="profile">Profile to disable or re-enable.</param>
+        void ToggleProfile(ProfileViewModel profile);
+
+        /// <summary>
+        /// Installs a maxed open shift save.
+        /// </summary>
+        Task InstallFullSaveAsync();
     }
 }

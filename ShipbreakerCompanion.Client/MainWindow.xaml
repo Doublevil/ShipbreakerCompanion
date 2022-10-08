@@ -9,10 +9,11 @@
         xmlns:views="clr-namespace:ShipbreakerCompanion.Client.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Shipbreaker Companion Tool" Height="700" Width="800"
+        Title="{Binding VersionNumber, StringFormat=Shipbreaker Companion Tool — {0}}" Height="700" Width="800"
         Closed="OnMainWindowClosed"
         Style="{StaticResource WindowBaseStyle}"
-        KeyUp="OnKeyUp">
+        KeyUp="OnKeyUp"
+        mah:DialogParticipation.Register="{Binding}">
   <Border Padding="5">
     <Grid>
       <mah:ProgressRing IsActive="{Binding IsLoading}" />
